@@ -1,4 +1,4 @@
-# 📈 Alpaca Stock Monitor
+# 📈 Ai-stock-trader-alpaca
 
 A real-time stock monitoring tool built on the [Alpaca Markets API](https://alpaca.markets). Track live prices, manage watchlists, stream quotes via WebSocket, and monitor your portfolio — all programmatically.
 
