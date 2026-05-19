@@ -46,7 +46,7 @@ def sell_stock(symbol, qty):
 if __name__ == "__main__":
     get_account()
 
-# Add at bottom of trader.py
-if __name__ == "__main__":
-    client.cancel_orders()
-    print("All orders cancelled!")
+# # Add at bottom of trader.py
+# if __name__ == "__main__":
+#     client.cancel_orders()
+#     print("All orders cancelled!")
