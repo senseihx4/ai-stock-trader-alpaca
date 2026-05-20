@@ -12,6 +12,10 @@ SECRET_KEY = os.getenv("ALPACA_SECRET_KEY")
 # Connect to Alpaca paper trading
 client = TradingClient(API_KEY, SECRET_KEY, paper=True)
 
+def is_market_open():
+    clock = client.get_clock()
+    return clock.is_open
+
 def get_account():
     account = client.get_account()
     print(f"Status: {account.status}")
@@ -46,7 +50,15 @@ def sell_stock(symbol, qty):
 if __name__ == "__main__":
     get_account()
 
-# # Add at bottom of trader.py
+# Add at bottom of trader.py
 # if __name__ == "__main__":
 #     client.cancel_orders()
 #     print("All orders cancelled!")
+
+
+
+# client = TradingClient(os.getenv("ALPACA_API_KEY"), os.getenv("ALPACA_SECRET_KEY"), paper=True)
+
+# # Close all positions
+# client.close_all_positions(cancel_orders=True)
+# print("✅ All positions closed!")
