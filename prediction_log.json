@@ -1,0 +1,474 @@
+{
+  "AAPL": {
+    "date": "2026-05-20",
+    "current_price": 298.9700012207031,
+    "predicted_price": 285.872972072415,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "MSFT": {
+    "date": "2026-05-20",
+    "current_price": 417.4200134277344,
+    "predicted_price": 422.8427284415447,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "GOOGL": {
+    "date": "2026-05-20",
+    "current_price": 387.6600036621094,
+    "predicted_price": 382.59299760916207,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "NVDA": {
+    "date": "2026-05-20",
+    "current_price": 220.61000061035156,
+    "predicted_price": 213.02764606746248,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "META": {
+    "date": "2026-05-20",
+    "current_price": 602.6099853515625,
+    "predicted_price": 622.8056292856345,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "AMZN": {
+    "date": "2026-05-20",
+    "current_price": 259.3399963378906,
+    "predicted_price": 267.9697156650027,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "TSLA": {
+    "date": "2026-05-20",
+    "current_price": 404.1099853515625,
+    "predicted_price": 414.37559895493774,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "AMD": {
+    "date": "2026-05-20",
+    "current_price": 414.04998779296875,
+    "predicted_price": 463.1395563621119,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "INTC": {
+    "date": "2026-05-20",
+    "current_price": 110.80000305175781,
+    "predicted_price": 138.06456226376463,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "ORCL": {
+    "date": "2026-05-20",
+    "current_price": 181.4600067138672,
+    "predicted_price": 199.68942420629355,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "CRM": {
+    "date": "2026-05-20",
+    "current_price": 179.4199981689453,
+    "predicted_price": 173.1177351990891,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "ADBE": {
+    "date": "2026-05-20",
+    "current_price": 254.99000549316406,
+    "predicted_price": 250.78077709229183,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "NFLX": {
+    "date": "2026-05-20",
+    "current_price": 89.33000183105469,
+    "predicted_price": 90.53662448854618,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "PYPL": {
+    "date": "2026-05-20",
+    "current_price": 43.83000183105469,
+    "predicted_price": 53.672318010420895,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "SHOP": {
+    "date": "2026-05-20",
+    "current_price": 101.01000213623047,
+    "predicted_price": 105.51149878950673,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "UBER": {
+    "date": "2026-05-20",
+    "current_price": 74.08999633789062,
+    "predicted_price": 76.5455157027609,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "SNAP": {
+    "date": "2026-05-20",
+    "current_price": 5.550000190734863,
+    "predicted_price": 7.495857598228311,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "LYFT": {
+    "date": "2026-05-20",
+    "current_price": 13.180000305175781,
+    "predicted_price": 13.180269358512192,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "CMCSA": {
+    "date": "2026-05-20",
+    "current_price": 24.799999237060547,
+    "predicted_price": 26.485810558778667,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "QCOM": {
+    "date": "2026-05-20",
+    "current_price": 195.61000061035156,
+    "predicted_price": 194.06408923322488,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "JPM": {
+    "date": "2026-05-20",
+    "current_price": 295.70001220703125,
+    "predicted_price": 300.32271219173566,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "BAC": {
+    "date": "2026-05-20",
+    "current_price": 50.70000076293945,
+    "predicted_price": 51.82652329780581,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "GS": {
+    "date": "2026-05-20",
+    "current_price": 928.739990234375,
+    "predicted_price": 933.5569278802886,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "MS": {
+    "date": "2026-05-20",
+    "current_price": 189.5800018310547,
+    "predicted_price": 183.7183665522415,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "C": {
+    "date": "2026-05-20",
+    "current_price": 119.97000122070312,
+    "predicted_price": 123.77823598661053,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "WFC": {
+    "date": "2026-05-20",
+    "current_price": 74.55000305175781,
+    "predicted_price": 74.95291569928692,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "AXP": {
+    "date": "2026-05-20",
+    "current_price": 309.30999755859375,
+    "predicted_price": 318.15254800500315,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "COF": {
+    "date": "2026-05-20",
+    "current_price": 182.02999877929688,
+    "predicted_price": 188.66593444265072,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "SCHW": {
+    "date": "2026-05-20",
+    "current_price": 91.80999755859375,
+    "predicted_price": 88.68928081310605,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "BLK": {
+    "date": "2026-05-20",
+    "current_price": 1036.300048828125,
+    "predicted_price": 1067.0952100659997,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "JNJ": {
+    "date": "2026-05-20",
+    "current_price": 230.0,
+    "predicted_price": 222.6264472135158,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "PFE": {
+    "date": "2026-05-20",
+    "current_price": 25.65999984741211,
+    "predicted_price": 25.719993858216185,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "MRK": {
+    "date": "2026-05-20",
+    "current_price": 114.23999786376953,
+    "predicted_price": 111.14430257701315,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "ABBV": {
+    "date": "2026-05-20",
+    "current_price": 213.75999450683594,
+    "predicted_price": 204.61201940030992,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "BMY": {
+    "date": "2026-05-20",
+    "current_price": 58.310001373291016,
+    "predicted_price": 57.02841284136957,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "GILD": {
+    "date": "2026-05-20",
+    "current_price": 130.5,
+    "predicted_price": 130.27118987146767,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "AMGN": {
+    "date": "2026-05-20",
+    "current_price": 330.75,
+    "predicted_price": 326.4603096736737,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "UNH": {
+    "date": "2026-05-20",
+    "current_price": 389.239990234375,
+    "predicted_price": 383.6835191344344,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "TMO": {
+    "date": "2026-05-20",
+    "current_price": 447.80999755859375,
+    "predicted_price": 457.5623875789761,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "ABT": {
+    "date": "2026-05-20",
+    "current_price": 88.81999969482422,
+    "predicted_price": 87.79534099378816,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "XOM": {
+    "date": "2026-05-20",
+    "current_price": 162.5500030517578,
+    "predicted_price": 149.78197928159364,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "CVX": {
+    "date": "2026-05-20",
+    "current_price": 197.25,
+    "predicted_price": 180.68912996269046,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "COP": {
+    "date": "2026-05-20",
+    "current_price": 125.11000061035156,
+    "predicted_price": 120.2594672392612,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "EOG": {
+    "date": "2026-05-20",
+    "current_price": 144.3000030517578,
+    "predicted_price": 136.35694645598142,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "SLB": {
+    "date": "2026-05-20",
+    "current_price": 56.77000045776367,
+    "predicted_price": 55.046432724517445,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "MPC": {
+    "date": "2026-05-20",
+    "current_price": 263.0199890136719,
+    "predicted_price": 237.08352973859976,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "VLO": {
+    "date": "2026-05-20",
+    "current_price": 262.6199951171875,
+    "predicted_price": 236.68147507215852,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "PSX": {
+    "date": "2026-05-20",
+    "current_price": 182.3800048828125,
+    "predicted_price": 165.44425973490527,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "BP": {
+    "date": "2026-05-20",
+    "current_price": 46.13999938964844,
+    "predicted_price": 44.13975188788117,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "ONGC.NS": {
+    "date": "2026-05-20",
+    "current_price": 296.5,
+    "predicted_price": 290.69922249098835,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "WMT": {
+    "date": "2026-05-20",
+    "current_price": 134.1999969482422,
+    "predicted_price": 127.97595196087023,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "COST": {
+    "date": "2026-05-20",
+    "current_price": 1094.3199462890625,
+    "predicted_price": 991.7913467683484,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "MCD": {
+    "date": "2026-05-20",
+    "current_price": 280.79998779296875,
+    "predicted_price": 277.14332023328734,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "SBUX": {
+    "date": "2026-05-20",
+    "current_price": 106.37999725341797,
+    "predicted_price": 105.31247173525117,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "NKE": {
+    "date": "2026-05-20",
+    "current_price": 42.41999816894531,
+    "predicted_price": 47.50708847879868,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "KO": {
+    "date": "2026-05-20",
+    "current_price": 81.91999816894531,
+    "predicted_price": 78.16765359702003,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "PG": {
+    "date": "2026-05-20",
+    "current_price": 141.3000030517578,
+    "predicted_price": 144.51619030164647,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "TGT": {
+    "date": "2026-05-20",
+    "current_price": 127.23999786376953,
+    "predicted_price": 125.28080647139905,
+    "predicted_direction": "SELL",
+    "actual_next_price": null,
+    "correct": null
+  },
+  "DIS": {
+    "date": "2026-05-20",
+    "current_price": 102.29000091552734,
+    "predicted_price": 104.85284385226693,
+    "predicted_direction": "BUY",
+    "actual_next_price": null,
+    "correct": null
+  }
+}

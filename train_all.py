@@ -13,7 +13,7 @@ device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 os.makedirs("models", exist_ok=True)
 
 def fetch_data(ticker):
-    df = yf.download(ticker, start="2022-01-01", end="2026-01-01", progress=False)
+    df = yf.download(ticker, start="2018-01-01", end="2026-05-15", progress=False)
     return df
 
 def prepare_data(df, seq_length=30):
