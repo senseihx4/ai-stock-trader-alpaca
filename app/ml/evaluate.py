@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 import numpy as np
 import torch
 import pickle
@@ -5,7 +9,6 @@ import matplotlib.pyplot as plt
 import yfinance as yf
 import ta
 import pandas as pd
-from pathlib import Path
 from sklearn.metrics import mean_squared_error
 from app.ml.model import StockLSTM
 

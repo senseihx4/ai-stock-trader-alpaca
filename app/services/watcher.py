@@ -1,3 +1,7 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+
 import numpy as np
 import torch
 import pandas as pd
@@ -8,7 +12,6 @@ import json
 import os
 import schedule
 from datetime import datetime
-from pathlib import Path
 from app.ml.model import StockLSTM
 from app.services.trader import buy_stock, sell_stock, is_market_open
 from app.core.stocks import STOCKS
