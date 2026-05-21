@@ -18,19 +18,19 @@ Most stock prediction models report high price accuracy (97%+) and call it done.
 ## Screenshots
 
 ### AAPL model evaluation — predicted vs actual price + directional accuracy bar chart
-![AAPL evaluation](<img width="1456" height="833" alt="image" src="https://github.com/user-attachments/assets/cbdab2ae-357f-4695-bf8f-c269e6aae846" />
+(<img width="1456" height="833" alt="image" src="https://github.com/user-attachments/assets/cbdab2ae-357f-4695-bf8f-c269e6aae846" />
 )
 
 ### Live positions on Alpaca paper trading dashboard
-![Alpaca positions](<img width="1454" height="840" alt="image" src="https://github.com/user-attachments/assets/753e1e61-89aa-4440-a982-a2d7ed859300" />
+(<img width="1454" height="840" alt="image" src="https://github.com/user-attachments/assets/753e1e61-89aa-4440-a982-a2d7ed859300" />
 )
 
 ### FastAPI Swagger UI — all endpoints
-![Swagger UI](<img width="1372" height="892" alt="image" src="https://github.com/user-attachments/assets/98d0d62e-c6da-4624-a2bc-37dc86b84740" />
+(<img width="1372" height="892" alt="image" src="https://github.com/user-attachments/assets/98d0d62e-c6da-4624-a2bc-37dc86b84740" />
 )
 
 ### Live API response from `/watcher/run`
-![Swagger response](<img width="1372" height="892" alt="image" src="https://github.com/user-attachments/assets/94fcd8bf-10e7-41d3-8d51-c06f2fe46326" />)
+(<img width="1372" height="892" alt="image" src="https://github.com/user-attachments/assets/94fcd8bf-10e7-41d3-8d51-c06f2fe46326" />)
 
 
 ---
