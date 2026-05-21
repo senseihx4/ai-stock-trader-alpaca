@@ -1,272 +1,210 @@
-# 📈 Ai-stock-trader-alpaca
+# Automatic Stock Trading Bot
 
-A real-time stock monitoring tool built on the [Alpaca Markets API](https://alpaca.markets). Track live prices, manage watchlists, stream quotes via WebSocket, and monitor your portfolio — all programmatically.
-
----
-
-## Table of Contents
-
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-  - [Fetch a Quote](#fetch-a-quote)
-  - [Stream Live Prices](#stream-live-prices)
-  - [Monitor Positions](#monitor-positions)
-  - [Track Orders](#track-orders)
-- [API Reference](#api-reference)
-- [Rate Limits](#rate-limits)
-- [Paper vs Live Trading](#paper-vs-live-trading)
-- [Contributing](#contributing)
-- [License](#license)
+An AI-powered stock trading bot that uses a custom LSTM neural network to predict next-day price direction and automatically places buy/sell orders through the [Alpaca](https://alpaca.markets) paper trading API. Fully controllable via a FastAPI server — start the bot, check accuracy, and monitor live positions from your browser at `/docs`.
 
 ---
 
-## Features
+## How It Works
 
-- **Real-time quotes** — Latest bid, ask, and last trade price for any US equity
-- **WebSocket streaming** — Subscribe to live trades, quotes, and minute bars
-- **Portfolio monitoring** — Current positions, market value, unrealized P&L
-- **Order tracking** — Open, filled, and cancelled order history
-- **Historical bars** — OHLCV data at minute, hour, or daily resolution
-- **Paper trading support** — Test strategies without risking real capital
+1. **Train** — An LSTM model is trained per stock on 8 years of daily OHLCV data with five features: Close price, Volume, RSI, MACD, and a 20-day moving average.
+2. **Predict** — Each day the model predicts tomorrow's closing price. If it expects a gain above the threshold it signals `BUY`, otherwise `SELL`.
+3. **Trade** — The bot places real paper orders via Alpaca and tracks open positions in memory.
+4. **Verify** — The next day it fetches actual prices and scores yesterday's predictions (directional accuracy), building a running history.
+
+---
+
+## Project Structure
+
+```
+.
+├── app/
+│   ├── main.py              # FastAPI entry point
+│   ├── routers/
+│   │   ├── trade.py         # /trade endpoints — single-stock orders
+│   │   └── watcher.py       # /watcher endpoints — bot control + accuracy
+│   ├── ml/
+│   │   ├── model.py         # LSTM model definition
+│   │   └── evaluate.py      # offline backtesting tool
+│   ├── services/
+│   │   ├── trader.py        # Alpaca API wrapper (buy / sell / account)
+│   │   └── watcher.py       # prediction engine + trading loop logic
+│   └── core/
+│       └── stocks.py        # master list of ~60 tracked tickers
+├── scripts/
+│   ├── train_all.py         # train one LSTM per stock
+│   ├── download.py          # bulk-download 10y of OHLCV data
+│   └── reset.py             # emergency: cancel orders + close all positions
+├── models/                  # saved model weights (.pth) and scalers (.pkl)
+├── prediction_log.json      # today's predictions (auto-updated at runtime)
+├── accuracy_history.json    # running directional accuracy log
+├── .env                     # Alpaca credentials (never commit)
+└── requirements.txt
+```
 
 ---
 
 ## Prerequisites
 
-- Node.js ≥ 18 (or Python ≥ 3.9)
-- An [Alpaca account](https://app.alpaca.markets/signup) (free)
-- API Key ID and Secret Key from the Alpaca dashboard
-
-> **Note:** Market data endpoints are available on the free plan. Portfolio and order endpoints require a funded or paper trading account.
+- Python ≥ 3.11
+- An [Alpaca account](https://app.alpaca.markets/signup) (free paper trading account works)
+- API Key + Secret from the Alpaca dashboard
 
 ---
 
 ## Installation
 
-### Node.js
-
 ```bash
-npm install @alpacahq/alpaca-trade-api
-```
+# 1. Clone the repo
+git clone <repo-url>
+cd <repo-folder>
 
-### Python
+# 2. Create and activate a virtual environment
+python -m venv venv
+source venv/bin/activate      # Windows: venv\Scripts\activate
 
-```bash
-pip install alpaca-py
+# 3. Install dependencies
+pip install -r requirements.txt
 ```
 
 ---
 
 ## Configuration
 
-Store your credentials in a `.env` file — never commit them to version control.
+Create a `.env` file in the project root:
 
 ```env
 ALPACA_API_KEY=your_api_key_id
 ALPACA_SECRET_KEY=your_secret_key
-ALPACA_BASE_URL=https://paper-api.alpaca.markets   # or https://api.alpaca.markets for live
+ALPACA_BASE_URL=https://paper-api.alpaca.markets/v2
 ```
 
-Load them in your app:
+> Always use the paper trading URL while testing. Switch to `https://api.alpaca.markets/v2` only for live trading with real money.
 
-```js
-// Node.js
-import Alpaca from "@alpacahq/alpaca-trade-api";
+---
 
-const alpaca = new Alpaca({
-  keyId: process.env.ALPACA_API_KEY,
-  secretKey: process.env.ALPACA_SECRET_KEY,
-  paper: true, // set to false for live trading
-});
+## Training the Models
+
+Before running the bot you need a trained model for each stock.
+
+```bash
+python -m scripts.train_all
 ```
+
+This downloads ~8 years of daily data, trains a 2-layer LSTM for each ticker in `app/core/stocks.py` (100 epochs each), and saves the weights + scaler to `models/`.
+
+---
+
+## Starting the Server
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Then open **[http://localhost:8000/docs](http://localhost:8000/docs)** in your browser.
+
+---
+
+## API Endpoints
+
+### Watcher (Bot Control)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/watcher/launch` | **Start the full bot** — verifies yesterday's predictions, runs today's scan, then schedules every 10 min |
+| `POST` | `/watcher/run` | Trigger a single scan immediately |
+| `POST` | `/watcher/start` | Start the 10-minute scheduling loop only |
+| `POST` | `/watcher/stop` | Stop the scheduling loop |
+| `GET`  | `/watcher/status` | Show running state, open positions, and buy counters |
+| `POST` | `/watcher/check-accuracy` | Score yesterday's predictions against actual prices |
+| `GET`  | `/watcher/accuracy-history` | Full directional accuracy log across all sessions |
+
+### Trade (Single Orders)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/trade/{ticker}` | Predict and immediately place one order for a ticker |
+| `GET`  | `/trade/account` | Show Alpaca account status and available cash |
+
+---
+
+## New Features (vs original)
+
+### `/watcher/launch` — One-click bot startup
+Previously you had to run `python watcher.py` from the terminal. Now you can launch the entire bot from the Swagger UI:
+
+1. Go to `http://localhost:8000/docs`
+2. Click **POST /watcher/launch** → **Try it out** → **Execute**
+3. The bot will immediately check yesterday's prediction accuracy, run a full scan, and schedule itself to run every 10 minutes in the background.
+
+### `/watcher/check-accuracy` — Verify predictions
+After the market closes, call this endpoint to fetch actual prices and score every prediction made that day. The result is saved to `accuracy_history.json`.
+
+### `/watcher/accuracy-history` — Running accuracy log
+Returns the last 20 sessions of directional accuracy (what % of UP/DOWN predictions were correct). Overall lifetime accuracy is included in the response.
+
+### `/trade/account` — Account info via API
+Check your Alpaca paper trading balance and account status without leaving the Swagger UI.
+
+---
+
+## Evaluating a Model (Offline)
+
+To backtest a trained model against historical data and plot predicted vs actual prices:
 
 ```python
-# Python
-from alpaca.data import StockHistoricalDataClient
-from alpaca.trading.client import TradingClient
+from app.ml.evaluate import evaluate_stock, evaluate_all
 
-data_client = StockHistoricalDataClient(
-    api_key=os.getenv("ALPACA_API_KEY"),
-    secret_key=os.getenv("ALPACA_SECRET_KEY"),
-)
+# Single stock
+evaluate_stock("AAPL")
+
+# Multiple stocks
+from app.core.stocks import STOCKS
+evaluate_all(STOCKS[:10])
+```
+
+Outputs directional accuracy, BUY/SELL accuracy breakdown, simulated profit per trade, and a chart.
+
+---
+
+## Emergency Reset
+
+If you need to cancel all open orders and close all positions immediately:
+
+```bash
+python scripts/reset.py
 ```
 
 ---
 
-## Usage
+## Trading Logic
 
-### Fetch a Quote
+| Signal | Condition |
+|--------|-----------|
+| `BUY`  | Model predicts tomorrow's price is > 1.5% above today's price, and the position limit for that stock hasn't been reached (max 5 buys per stock) |
+| `SELL` | A held position has gained ≥ 1.5% since purchase, OR the model predicts a decline |
+| No trade | Predicted gain is below the 1.5% threshold |
 
-Get the latest quote for one or more symbols.
-
-```js
-// Node.js
-const quote = await alpaca.getLatestQuote("AAPL");
-console.log(`AAPL ask: $${quote.ap}`);
-```
-
-```python
-# Python
-from alpaca.data.requests import StockLatestQuoteRequest
-
-request = StockLatestQuoteRequest(symbol_or_symbols=["AAPL", "TSLA"])
-quotes = data_client.get_stock_latest_quote(request)
-print(quotes["AAPL"].ask_price)
-```
-
----
-
-### Stream Live Prices
-
-Use WebSockets to receive real-time trade and quote updates.
-
-```js
-// Node.js
-const stream = alpaca.data_stream_v2;
-
-stream.onConnect(() => {
-  stream.subscribeForTrades(["AAPL", "MSFT"]);
-});
-
-stream.onStockTrade((trade) => {
-  console.log(`${trade.S} traded at $${trade.p} (${trade.s} shares)`);
-});
-
-stream.connect();
-```
-
-```python
-# Python
-from alpaca.data.live import StockDataStream
-
-wss = StockDataStream(
-    api_key=os.getenv("ALPACA_API_KEY"),
-    secret_key=os.getenv("ALPACA_SECRET_KEY"),
-)
-
-async def on_trade(trade):
-    print(f"{trade.symbol} @ ${trade.price}")
-
-wss.subscribe_trades(on_trade, "AAPL", "TSLA")
-wss.run()
-```
-
----
-
-### Monitor Positions
-
-View all open positions and their current market value.
-
-```js
-// Node.js
-const positions = await alpaca.getPositions();
-
-positions.forEach((p) => {
-  console.log(`${p.symbol}: ${p.qty} shares | Market value: $${p.market_value} | P&L: $${p.unrealized_pl}`);
-});
-```
-
-```python
-# Python
-trading_client = TradingClient(
-    api_key=os.getenv("ALPACA_API_KEY"),
-    secret_key=os.getenv("ALPACA_SECRET_KEY"),
-    paper=True,
-)
-
-positions = trading_client.get_all_positions()
-for p in positions:
-    print(f"{p.symbol}: {p.qty} shares, unrealized P&L: ${p.unrealized_pl}")
-```
-
----
-
-### Track Orders
-
-List recent orders filtered by status.
-
-```js
-// Node.js
-const orders = await alpaca.getOrders({ status: "open", limit: 10 });
-
-orders.forEach((o) => {
-  console.log(`${o.symbol} ${o.side} ${o.qty} @ ${o.type} — ${o.status}`);
-});
-```
-
-```python
-# Python
-from alpaca.trading.requests import GetOrdersRequest
-from alpaca.trading.enums import QueryOrderStatus
-
-request = GetOrdersRequest(status=QueryOrderStatus.OPEN, limit=10)
-orders = trading_client.get_orders(request)
-for o in orders:
-    print(f"{o.symbol} {o.side} {o.qty} shares — {o.status}")
-```
-
----
-
-## API Reference
-
-| Endpoint | Method | Description |
-|---|---|---|
-| `/v2/account` | GET | Account details and portfolio value |
-| `/v2/positions` | GET | All open positions |
-| `/v2/positions/{symbol}` | GET | Position for a specific symbol |
-| `/v2/orders` | GET | List orders |
-| `/v2/orders` | POST | Place a new order |
-| `/v2/stocks/{symbol}/quotes/latest` | GET | Latest quote |
-| `/v2/stocks/{symbol}/trades/latest` | GET | Latest trade |
-| `/v2/stocks/{symbol}/bars` | GET | Historical OHLCV bars |
-
-Full API docs: [https://docs.alpaca.markets](https://docs.alpaca.markets)
-
----
-
-## Rate Limits
-
-| Plan | Data requests | Order requests |
-|---|---|---|
-| Free (Market Data) | 200 req/min | — |
-| Paper / Live | 200 req/min | 200 req/min |
-
-WebSocket connections support up to **30 subscriptions** per connection on the free plan. Upgrade to the Unlimited plan for higher limits.
+The bot runs every 10 minutes during market hours and skips automatically when the market is closed.
 
 ---
 
 ## Paper vs Live Trading
 
-| Feature | Paper (`paper-api.alpaca.markets`) | Live (`api.alpaca.markets`) |
-|---|---|---|
+| Feature | Paper | Live |
+|---------|-------|------|
 | Real money | ❌ | ✅ |
 | Real market data | ✅ | ✅ |
 | Order execution | Simulated | Real |
-| Recommended for | Development & testing | Production |
+| URL | `paper-api.alpaca.markets` | `api.alpaca.markets` |
 
-Always develop and test against the paper environment before switching to live.
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m "feat: add my feature"`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a Pull Request
-
-Please follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages.
+Always validate the bot's directional accuracy over several weeks of paper trading before considering live deployment.
 
 ---
 
 ## License
 
-MIT License. See [LICENSE](./LICENSE) for details.
+MIT License.
 
 ---
 
-> Built with the [Alpaca Markets API](https://alpaca.markets). Not affiliated with or endorsed by Alpaca Securities LLC.
+> Built with PyTorch, FastAPI, and the Alpaca Markets API. Not affiliated with or endorsed by Alpaca Securities LLC.

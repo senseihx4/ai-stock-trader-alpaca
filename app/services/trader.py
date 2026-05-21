@@ -6,59 +6,42 @@ from alpaca.trading.enums import OrderSide, TimeInForce
 
 load_dotenv()
 
-API_KEY = os.getenv("ALPACA_API_KEY")
+API_KEY    = os.getenv("ALPACA_API_KEY")
 SECRET_KEY = os.getenv("ALPACA_SECRET_KEY")
 
-# Connect to Alpaca paper trading
 client = TradingClient(API_KEY, SECRET_KEY, paper=True)
 
-def is_market_open():
-    clock = client.get_clock()
-    return clock.is_open
+
+def is_market_open() -> bool:
+    return client.get_clock().is_open
+
 
 def get_account():
     account = client.get_account()
-    print(f"Status: {account.status}")
-    print(f"Cash: ${account.cash}")
-    return account
+    return {"status": account.status, "cash": float(account.cash)}
 
-def buy_stock(symbol, qty):
+
+def buy_stock(symbol: str, qty: int):
     order = client.submit_order(
         MarketOrderRequest(
             symbol=symbol,
             qty=qty,
             side=OrderSide.BUY,
-            time_in_force=TimeInForce.DAY
+            time_in_force=TimeInForce.DAY,
         )
     )
     print(f"BUY order placed: {qty} shares of {symbol}")
     return order
 
-def sell_stock(symbol, qty):
+
+def sell_stock(symbol: str, qty: int):
     order = client.submit_order(
         MarketOrderRequest(
             symbol=symbol,
             qty=qty,
             side=OrderSide.SELL,
-            time_in_force=TimeInForce.DAY
+            time_in_force=TimeInForce.DAY,
         )
     )
     print(f"SELL order placed: {qty} shares of {symbol}")
     return order
-
-
-if __name__ == "__main__":
-    get_account()
-
-# Add at bottom of trader.py
-# if __name__ == "__main__":
-#     client.cancel_orders()
-#     print("All orders cancelled!")
-
-
-
-# client = TradingClient(os.getenv("ALPACA_API_KEY"), os.getenv("ALPACA_SECRET_KEY"), paper=True)
-
-# # Close all positions
-# client.close_all_positions(cancel_orders=True)
-# print("✅ All positions closed!")

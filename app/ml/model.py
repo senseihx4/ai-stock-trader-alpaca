@@ -1,10 +1,9 @@
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-import yfinance as yf
-import ta  # technical analysis library
+import ta
+
 
 def prepare_data(df, seq_length=30):
     device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
@@ -19,8 +18,8 @@ def prepare_data(df, seq_length=30):
 
     X, y = [], []
     for i in range(len(scaled) - seq_length):
-        X.append(scaled[i:i+seq_length])
-        y.append(scaled[i+seq_length][0])
+        X.append(scaled[i:i + seq_length])
+        y.append(scaled[i + seq_length][0])
 
     X = torch.tensor(np.array(X), dtype=torch.float32).to(device)
     y = torch.tensor(np.array(y), dtype=torch.float32).to(device)
@@ -41,5 +40,6 @@ class LSTMModel(nn.Module):
         out, _ = self.lstm(x, (h0, c0))
         out = self.fc(out[:, -1, :])
         return out.squeeze(-1)
+
 
 StockLSTM = LSTMModel
